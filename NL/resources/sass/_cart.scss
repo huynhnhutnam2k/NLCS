@@ -1,0 +1,39 @@
+.cart{
+    width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    &-title{
+        padding: 1rem;
+        border-bottom: 3px solid;
+    }
+    &-product{
+        width: 600px;
+        margin-bottom: 2rem;
+        border-bottom: 3px solid;
+        &-content{
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            &-detail{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        &-image{
+            width: 100px;
+            height: 130px;
+            margin-bottom: 2rem;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    &-checkout{
+        width: 280px;
+        
+    }
+}

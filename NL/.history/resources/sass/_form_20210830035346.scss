@@ -1,0 +1,20 @@
+.form{
+    display: flex;  
+    flex-direction: column;
+    padding-top: 25px;
+    width: 420px;
+    margin: auto;
+    align-items: center;
+    background-color: white;
+    &-input{
+        width: 370px;
+        margin: 0 auto;
+        height: 45px;
+        margin-bottom: 20px;
+        // background-color: white;
+        outline: none;
+        border-radius: 5px;
+        padding-left: 1rem;
+    }
+    
+}
