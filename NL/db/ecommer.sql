@@ -11,7 +11,7 @@
  Target Server Version : 100419
  File Encoding         : 65001
 
- Date: 09/11/2021 20:35:11
+ Date: 21/11/2021 17:02:19
 */
 
 SET NAMES utf8mb4;
@@ -46,49 +46,48 @@ CREATE TABLE `categories`  (
   `cate_name_author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `cate_author_id` int NULL DEFAULT NULL,
   `cate_images` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `created_at` datetime(6) NULL DEFAULT NULL,
-  `updated_at` datetime(6) NULL DEFAULT NULL,
+  `created_at` datetime(6) NULL DEFAULT current_timestamp(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `update_at` datetime(6) NULL DEFAULT current_timestamp(6) ON UPDATE CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `categories_ibfk_1`(`cate_author_id`) USING BTREE,
-  CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`cate_author_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `cate_author_id`(`cate_author_id`) USING BTREE,
+  CONSTRAINT `categories_ibfk_2` FOREIGN KEY (`cate_author_id`) REFERENCES `admin` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `categories_ibfk_3` FOREIGN KEY (`cate_author_id`) REFERENCES `admin` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
-INSERT INTO `categories` VALUES (7, 'CURNON', 1, 'hnam', 1, NULL, NULL, NULL);
-INSERT INTO `categories` VALUES (8, 'DYOSS', 1, 'hnam', 1, NULL, NULL, NULL);
-INSERT INTO `categories` VALUES (9, 'VIWAT', 1, 'hnam', 1, NULL, NULL, NULL);
-INSERT INTO `categories` VALUES (10, 'YORS', 1, 'hnam', 1, NULL, NULL, NULL);
-INSERT INTO `categories` VALUES (11, 'KLASERN', 1, 'hnam', 1, NULL, NULL, NULL);
+INSERT INTO `categories` VALUES (1, 'CURNON', 1, 'hnam', 1, NULL, '2021-11-21 10:24:18.605046', '2021-11-21 10:24:18.605046');
+INSERT INTO `categories` VALUES (2, 'DYOSS', 1, 'hnam', 1, NULL, '2021-11-21 10:24:33.936548', '2021-11-21 10:24:33.936548');
+INSERT INTO `categories` VALUES (3, 'VIWAT', 1, 'hnam', 1, NULL, '2021-11-21 10:24:36.686166', '2021-11-21 10:24:36.686166');
+INSERT INTO `categories` VALUES (4, 'YORS', 1, 'hnam', 1, NULL, '2021-11-21 10:24:39.390323', '2021-11-21 10:24:39.390323');
+INSERT INTO `categories` VALUES (5, 'KLASERN', 1, 'hnam', 1, NULL, '2021-11-21 10:24:41.495759', '2021-11-21 10:24:41.495759');
 
 -- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail`  (
-  `oder_detail_id` int NOT NULL AUTO_INCREMENT,
+  `orer_detail_id` int NOT NULL AUTO_INCREMENT,
   `od_order_id` int NULL DEFAULT NULL,
   `od_pro_id` int NULL DEFAULT NULL,
   `od_user_id` int NULL DEFAULT NULL,
   `od_pro_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `od_pro_qty` int NULL DEFAULT NULL,
   `od_pro_price` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `od_created_at` datetime(6) NULL DEFAULT NULL,
-  PRIMARY KEY (`oder_detail_id`) USING BTREE,
-  INDEX `order_detail_ibfk_8`(`od_user_id`) USING BTREE,
-  INDEX `order_detail_ibfk_4`(`od_pro_id`) USING BTREE,
-  INDEX `order_detail_ibfk_7`(`od_order_id`) USING BTREE,
-  CONSTRAINT `order_detail_ibfk_4` FOREIGN KEY (`od_pro_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `order_detail_ibfk_6` FOREIGN KEY (`od_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `order_detail_ibfk_7` FOREIGN KEY (`od_order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `order_detail_ibfk_8` FOREIGN KEY (`od_user_id`) REFERENCES `transactions` (`tr_user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `od_created_at` datetime(6) NULL DEFAULT current_timestamp(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`orer_detail_id`) USING BTREE,
+  INDEX `od_order_id`(`od_order_id`) USING BTREE,
+  INDEX `od_pro_id`(`od_pro_id`) USING BTREE,
+  INDEX `od_user_id`(`od_user_id`) USING BTREE,
+  CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`od_order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`od_pro_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `order_detail_ibfk_3` FOREIGN KEY (`od_user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (9, 8, 11, 1, 'M-53', 3, '3099000', NULL);
 
 -- ----------------------------
 -- Table structure for orders
@@ -102,42 +101,17 @@ CREATE TABLE `orders`  (
   `or_user_id` int NULL DEFAULT NULL,
   `or_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `or_total` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `created_at` datetime(6) NULL DEFAULT NULL,
+  `created_at` datetime(6) NULL DEFAULT current_timestamp(6) ON UPDATE CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `or_transaction_id`(`or_transaction_id`) USING BTREE,
-  INDEX `orders_ibfk_1`(`or_user_id`) USING BTREE,
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`or_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `or_user_id`(`or_user_id`) USING BTREE,
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`or_transaction_id`) REFERENCES `transactions` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`or_user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (8, 23, NULL, 8, 1, 'Đang chờ xử lý', '9,297,000.00', NULL);
-
--- ----------------------------
--- Table structure for payment
--- ----------------------------
-DROP TABLE IF EXISTS `payment`;
-CREATE TABLE `payment`  (
-  `payment_id` int NOT NULL AUTO_INCREMENT,
-  `payment_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `payment_order_id` int NULL DEFAULT NULL,
-  `payment_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `payment_time` timestamp(6) NULL DEFAULT NULL,
-  PRIMARY KEY (`payment_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of payment
--- ----------------------------
-INSERT INTO `payment` VALUES (1, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (2, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (3, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (4, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (5, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (6, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (7, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
-INSERT INTO `payment` VALUES (8, 'Bằng tiền mặt', NULL, 'Đang chờ xử lý', NULL);
 
 -- ----------------------------
 -- Table structure for products
@@ -155,33 +129,27 @@ CREATE TABLE `products`  (
   `pro_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `pro_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `pro_number` int NULL DEFAULT NULL,
-  `created_at` datetime(6) NULL DEFAULT NULL,
+  `created_at` datetime(6) NULL DEFAULT current_timestamp(6) ON UPDATE CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `products_ibfk_2`(`pro_author_id`) USING BTREE,
-  INDEX `products_ibfk_3`(`pro_category_id`) USING BTREE,
-  CONSTRAINT `products_ibfk_2` FOREIGN KEY (`pro_author_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `products_ibfk_3` FOREIGN KEY (`pro_category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `pro_category_id`(`pro_category_id`) USING BTREE,
+  INDEX `pro_author_id`(`pro_author_id`) USING BTREE,
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`pro_category_id`) REFERENCES `categories` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `products_ibfk_2` FOREIGN KEY (`pro_author_id`) REFERENCES `admin` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES (9, 'STERLING', 7, 3099000, 1, 1, b'1', 'images/sterling352.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (10, 'SHARP', 7, 2299000, 1, 1, NULL, 'images/sharp576.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (11, 'M-53', 7, 3099000, 1, 1, NULL, 'images/detroit711.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (12, 'HERBERT', 7, 2299000, 1, 1, NULL, 'images/herbert597.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (13, 'GATSPY', 8, 3100000, 1, 1, b'1', 'images/GATSPY915.jpg', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (14, 'ICONIC', 7, 2990000, 1, 1, NULL, 'images/ICONIC243.jpg', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (15, 'ROYAL', 7, 2990000, 1, 1, b'1', 'images/ROYAL336.jpg', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (16, 'MYSTIQUE', 7, 3100000, 1, 1, NULL, 'images/MYSTIQUE774.jpg', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (18, 'VIWAT XANH', 7, 1199000, 1, 1, b'1', 'images/XANHDATROI257.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (19, 'VIWAT DEN', 7, 1199000, 1, 1, NULL, 'images/NATODEN670.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (20, 'VIWAT ĐỎ ĐẬM', 7, 1199000, 1, 1, b'1', 'images/DODAM216.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (21, 'NO1 NAVY', 10, 2350000, 1, 1, NULL, 'images/NO1NAVY281.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (22, 'NO1 GRAY', 7, 2850000, 1, 1, b'1', 'images/NO1GRAY68.png', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (23, 'áda', 7, 123123, 1, 1, NULL, '', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (24, 'đâsdad', 7, 123123, 1, 1, NULL, '', NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (25, 'đâsdad', 9, 123123, 1, 1, NULL, '', NULL, NULL, NULL, NULL);
+INSERT INTO `products` VALUES (1, 'NATO CAM', 2, 1199000, 1, 1, b'1', 'images/herbert714.png', NULL, NULL, 3, '2021-11-21 16:31:53.468722');
+INSERT INTO `products` VALUES (2, 'NOVA', 1, 2850000, 1, 1, NULL, 'images/nova199.png', NULL, NULL, 10, '2021-11-21 10:38:39.775885');
+INSERT INTO `products` VALUES (3, 'DOROTHY', 1, 2499000, 1, 1, NULL, 'images/dorothy28.png', NULL, NULL, 5, '2021-11-21 10:39:32.036027');
+INSERT INTO `products` VALUES (4, 'CHARM', 1, 2299000, 1, 1, NULL, 'images/charm111.png', NULL, NULL, 5, '2021-11-21 10:40:08.077334');
+INSERT INTO `products` VALUES (5, 'MISTYQUE', 2, 3100000, 1, 1, NULL, 'images/MYSTIQUE134.jpg', NULL, NULL, 2, '2021-11-21 10:41:36.901557');
+INSERT INTO `products` VALUES (6, 'NATO CAM', 3, 1199000, 1, 1, b'1', 'images/nam_vai_cam_3_v2_large850.webp', NULL, NULL, 3, '2021-11-21 10:52:07.209869');
+INSERT INTO `products` VALUES (8, 'NATO HỒNG', 3, 1199000, 1, 1, NULL, 'images/nu-dahiendai-hong-v2_fcbc7a20cfa741a9886afd612080b043_large963.png', NULL, NULL, 3, '2021-11-21 10:46:10.106573');
+INSERT INTO `products` VALUES (9, 'NAVI', 4, 2350000, 1, 1, b'1', 'images/NAVI996.png', NULL, NULL, 2, '2021-11-21 10:52:02.748463');
+INSERT INTO `products` VALUES (10, 'MOT 01- BLACK', 5, 1199000, 1, 1, NULL, 'images/mot-01-black_360x769.png', NULL, NULL, 4, '2021-11-21 10:50:34.547843');
+INSERT INTO `products` VALUES (11, 'MOT 02 - TAN STRAP', 5, 1199000, 1, 1, b'1', 'images/mot-02-tan_9fc4a26b-ff25-4c95-bf56-2f2568fb7341_360x70.png', NULL, NULL, 1, '2021-11-21 10:52:04.182988');
 
 -- ----------------------------
 -- Table structure for transactions
@@ -198,26 +166,25 @@ CREATE TABLE `transactions`  (
   `tr_phone` decimal(11, 0) NULL DEFAULT NULL,
   `tr_status` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `transactions_ibfk_1`(`tr_user_id`) USING BTREE,
-  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`tr_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `tr_user_id`(`tr_user_id`) USING BTREE,
+  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`tr_user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transactions
 -- ----------------------------
-INSERT INTO `transactions` VALUES (23, 1, 'hnam', 'hnam4527@gmail.com', NULL, NULL, 'CẦN THƠ', 949115014, NULL);
 
 -- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT ' ',
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `active` bit(1) NULL DEFAULT NULL,
+  `active` int NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `created_at` datetime(6) NULL DEFAULT NULL,
+  `created_at` datetime(6) NULL DEFAULT current_timestamp(6) ON UPDATE CURRENT_TIMESTAMP(6),
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -226,6 +193,6 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'hnam', 'e8f3378dd65dd6c4f8b8f4baafb942d4', NULL, NULL, NULL, 'hnam4527@gmail.com', '0949115014');
+INSERT INTO `users` VALUES (1, 'nam', '4e29244e92ace4a6bc7d4c08c36a6d2b', NULL, NULL, '2021-11-21 11:36:20.071726', 'hnam@gmail.com', '01246465500');
 
 SET FOREIGN_KEY_CHECKS = 1;
