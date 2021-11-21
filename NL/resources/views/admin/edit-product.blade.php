@@ -17,7 +17,8 @@
                         ?>
                         @foreach ($edit_pro as $pro)
 
-                            <form role="form" action="{{ URL::to('/update-product=' . $pro->id) }}" method="post">
+                            <form role="form" action="{{ URL::to('/update-product=' . $pro->id) }}" method="post"
+                                enctype=“multipart/form-data”>
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label>Tên sản phẩm</label>
@@ -40,19 +41,20 @@
                                 <label>Sale</label>
                                 <input type="text" class="form-control"  name="sale" value="{{$pro->pro_sale}}">
                                 </div> --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>Tên người thêm</label>
                                     <input type="text" class="form-control" value="{{ $pro->name }}"
                                         name="name_author">
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
-                                    <label>ID </label>
-                                    <input type="text" class="form-control" value="{{ $pro->id }}" name="id_author">
+                                    {{-- <label>ID </label> --}}
+                                    <input type="hidden" class="form-control" value="{{ $pro->id }}"
+                                        name="id_author">
                                 </div>
                                 <div class="form-group">
                                     <label>Số lượng </label>
-                                    <input type="number" class="form-control" value="{{ $pro->pro_number }}"
-                                        name="number_pro">
+                                    <input type="text" class="form-control" value="{{ $pro->pro_number }}"
+                                        name="number">
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả sản phẩm</label>
@@ -60,7 +62,7 @@
                                         <textarea rows="4" class="form-control " name="content" required=""
                                             value="{{ $pro->pro_description }}">
 
-                                                    </textarea>
+                                                                                </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -69,7 +71,7 @@
                                         <textarea rows="4" class="form-control " name="content" required=""
                                             value="{{ $pro->pro_content }}">
 
-                                                    </textarea>
+                                                                                </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

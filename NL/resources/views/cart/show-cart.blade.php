@@ -37,17 +37,17 @@
             <div class="header-top-right">
                 <ul class="header-top-list">
                     {{-- <li class="header-top-item"><a href="#">Tin tuc</a></li> --}}
-                    <li class="header-top-item"><a href="{{ URL::to('/') }}">Trang chu</a></li>
-                    <li class="header-top-item"><a href="{{ URL::to('/product') }}">San pham</a></li>
-                    <li class="header-top-item"><a href="{{ URL::to('/show-cart') }}">Gio hang</a></li>
+                    <li class="header-top-item"><a href="{{ URL::to('/') }}">TRANG CHỦ</a></li>
+                    <li class="header-top-item"><a href="{{ URL::to('/product') }}">SẢN PHẨM</a></li>
+                    <li class="header-top-item"><a href="{{ URL::to('/show-cart') }}">GIỎ HÀNG</a></li>
                     <?php 
                                 $user_id = Session::get('id_user');
                                 if ($user_id ==NULL) {
                                  ?>
-                    <li><a href="{{ URL::to('login-checkout') }}" class="header-top-item">Đang nhap</a></li>
+                    <li><a href="{{ URL::to('login-checkout') }}" class="header-top-item">ĐĂNG NHẬP</a></li>
                     </li>
                     <?php }else{ ?>
-                    <li><a href="{{ URL::to('logout-checkout') }}" class="header-top-item">Đang xuat</a></li>
+                    <li><a href="{{ URL::to('logout-checkout') }}" class="header-top-item">ĐĂNG XUẤT</a></li>
                     </li>
                     <?php } ?>
                 </ul>

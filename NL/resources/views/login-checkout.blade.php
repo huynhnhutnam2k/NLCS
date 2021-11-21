@@ -5,22 +5,22 @@
      {{-- <a href="/" class="path">Trang chu</a> / <span>Dang ky</span> --}}
      <section class="register">
       <h2 class=register-title>ĐĂNG NHẬP</h2>
-      <form method="POST" class="form" action="{{URL::to('/login')}}">
+      <form method="POST" class="form" action="{{URL::to('/login')}}" style="position: relative;">
           {{{ csrf_field() }}}
-          <input type="email" class="form-input" name="user_email" placeholder="Email" autocomplete='off'>
-          <input type="password" class="form-input" name="user_password" placeholder="Password" autocomplete='off'>
-          
+          <input type="email" class="form-input" name="user_email" placeholder="Email" autocomplete='off' required>
+          <input type="password" class="form-input" name="user_password" placeholder="Password" autocomplete='off' required>
           <button class="btn-register">ĐĂNG NHẬP</button>
+          {{-- <a href="{{URL::to('/forgot-password')}}" style="color: black;">Quên mật khẩu</a> --}}
       </form>
   </section>
   <section class="register">
       <h2 class=register-title>ĐĂNG KÝ</h2>
       <form method="POST" class="form" action="{{URL::to('/add-user')}}">
           {{ csrf_field() }}
-          <input type="text" class="form-input" name="user_name" placeholder="Tên tài khoản" autocomplete='off'>
-          <input type="text" class="form-input" name="user_email" placeholder="Email" autocomplete='off'>
-          <input type="text" class="form-input" name="user_phone" placeholder="SDT" autocomplete='off'>
-          <input type="password" class="form-input" name="user_password" placeholder="Password" autocomplete='off'>
+          <input type="text" class="form-input" name="user_name" placeholder="Tên tài khoản" autocomplete='off' required>
+          <input type="email" class="form-input" name="user_email" placeholder="Email" autocomplete='off' required>
+          <input type="text" class="form-input" name="user_phone" placeholder="SDT" autocomplete='off' required>
+          <input type="password" class="form-input" name="user_password" placeholder="Password" autocomplete='off' required>
           <button class="btn-register">ĐĂNG KÝ</button>
       </form>
   </section>

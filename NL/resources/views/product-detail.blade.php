@@ -29,7 +29,7 @@
                             <label for="quatity">Quatity</label>
                             <input type="number" min="1" max="20" value="1" name="qty" class="quatity"
                                 style="width: 350px;height: 35px;padding:0 10px">
-                            <button class="btn" type="submit" name="add-cart">Add to card</button>
+                            <button class="btn" type="submit" name="add-cart">Thêm vào giỏ hang</button>
                         </div>
                     </form>
                     <div class="clothes-content-accordion">

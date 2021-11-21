@@ -58,3 +58,13 @@ function handleClickAccordionCart(e){
 
 
 
+// alert
+const input = document.querySelector('.form-input')
+input.addEventListener('input', function (e) {
+    const value = e.target.value
+    console.log(value)
+})
+const template = `<div class="sweet-alert">
+<div class="sweet-icon"></div>
+<div class="sweet-text">Add product success</div>
+</div>`

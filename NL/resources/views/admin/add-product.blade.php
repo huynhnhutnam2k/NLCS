@@ -31,11 +31,7 @@
                                         <option value="4">Adidas</option>
                                         <option value="5">New Balance</option> --}}
                                     @foreach ($brand as $b)
-                                        echo '
-                                        <pre>'
-                                                print_r($b)
-                                            echo '</pre>'
-                                        die;
+
                                         <option value="{{ $b->id }}">{{ $b->cate_name }}</option>
                                     @endforeach
                                 </select>
@@ -45,29 +41,33 @@
                                 <input type="text" class="form-control" name="price">
                             </div>
                             <div class="form-group">
-                                <label>Tên người thêm</label>
-                                <input type="text" class="form-control" value="<?= Session::get('name') ?>"
+                                {{-- <label>Tên người thêm</label> --}}
+                                <input type="hidden" class="form-control" value="<?= Session::get('name') ?>"
                                     name="name_author">
                             </div>
                             <div class="form-group">
-                                <label>ID </label>
-                                <input type="text" class="form-control" value="<?= Session::get('id') ?>"
+                                {{-- <label>ID </label> --}}
+                                <input type="hidden" class="form-control" value="<?= Session::get('id') ?>"
                                     name="id_author">
                             </div>
+                            <div class="form-group">
+                                <label>Số lượng </label>
+                                <input type="text" class="form-control" name="number">
+                            </div>
+
                             <div class="form-group">
                                 <label>Mô tả sản phẩm</label>
                                 <div class="col-lg-15">
                                     <textarea rows="4" class="form-control " name="des" required="" id="ckeditor">
 
-                                                        </textarea>
+                                                                            </textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Nội dung sản phẩm</label>
                                 <div class="col-lg-15">
-                                    <textarea rows="4" class="form-control " name="content" required="" id="ckeditor1">
-
-                                                        </textarea>
+                                    <textarea rows="4" class="form-control " name="content" required=""
+                                        id="ckeditor1"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -46,13 +46,13 @@
                             <td>{{ $p->name }}</td>
                             <td><span class="text-ellipsis" style="text-align: center;">
                                     <?php
-              if($p->pro_active == 0){
-            ?>
-                                    <a href="{{ URL::to('/unactive-product=' . $p->id) }}"><span class="fa-style fa fa-circle"
-                                            style="color:red;"><span></a>
+                                    if($p->pro_active == 0){
+                                    ?>
+                                    <a href="{{ URL::to('/unactive-product=' . $p->id) }}"><span
+                                            class="fa-style fa fa-circle" style="color:red;"><span></a>
                                     <?php }else{ ?>
-                                    <a href="{{ URL::to('/active-product=' . $p->id) }}"><span class="fa-style fa fa-circle"
-                                            style="color:green;"><span></a>
+                                    <a href="{{ URL::to('/active-product=' . $p->id) }}"><span
+                                            class="fa-style fa fa-circle" style="color:green;"><span></a>
                                     <?php } ?>
                                 </span>
                             </td>
