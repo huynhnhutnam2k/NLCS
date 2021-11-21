@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         // return view('pages.home');
         $categories = DB::table('categories')->where('cate_active', '1')->get();
-        $pro_new = DB::table('products')->where('pro_active', '1')->orderby('id', 'desc')->limit(8)->get();
+        $pro_new = DB::table('products')->where('pro_active', '1')->orderby('id', 'asc')->limit(8)->get();
         $pro_hot = DB::table('products')->where('pro_active', '1')->where('pro_hot', '1')->where('pro_number', '<', '8')->limit(4)->get();
         return view('welcome')->with('categories', $categories)->with('pro_new', $pro_new)->with('pro_hot', $pro_hot);
     }
@@ -34,11 +34,6 @@ class HomeController extends Controller
         //     $i+=1;
         // }
         // Session::put('sl',$i);
-        if ($search_pro) {
-            return view('pages.search')->with('pro', $search_pro)->with('categories', $categories);
-        } else {
-            Session::put('msg', 'Không tìm thấy sản phẩm tương tự ');
-            return view('pages.search')->with('categories', $categories);
-        }
+        return view('pages.search')->with('pro', $search_pro)->with('categories', $categories);
     }
 }

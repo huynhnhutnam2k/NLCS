@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// namespace App\Http\Controllers\strip_tags_content;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Echo_;
@@ -46,11 +44,11 @@ class ProductController extends Controller
         // $data['pro_name_author'] = $req->name_author;
         $data['pro_number'] = $req->number;
         $data['pro_description'] = $req->des;
-
+        print_r($data);
+        die;
         $data['pro_content'] = $req->content;
         $data['pro_active'] = $req->status;
-        $string = $data['pro_description'];
-
+        
         // $data['pro_view'] = $req->images;
         $get_image = $req->file('images');
         if ($get_image) {
@@ -66,6 +64,7 @@ class ProductController extends Controller
         } else {
             $data['pro_view'] = "";
         }
+        <?php echo substr(strip_tags($row_get_Business['business_description']),0,110) . "..."; ?>
         DB::table('products')->insert($data);
         Session::put('msg', 'them thanh cong');
 

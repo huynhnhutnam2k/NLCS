@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// namespace App\Http\Controllers\strip_tags_content;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Echo_;
@@ -30,9 +28,11 @@ class ProductController extends Controller
     }
     public function show_product()
     {
-        $all = DB::table('products')->join('categories', 'products.pro_category_id', '=', 'categories.id')->join('admin', 'categories.cate_author_id', '=', 'admin.id')->select('products.id', 'products.pro_name', 'products.pro_view', 'products.pro_price', 'categories.cate_name', 'admin.name', 'products.pro_number', 'products.created_at', 'products.pro_active')->orderby('products.created_at', 'desc')->get();
+        $all = DB::table('products')->join('categories', 'products.pro_category_id', '=', 'categories.id')->join('admin', 'categories.cate_author_id', '=', 'admin.id')->select('products.id', 'products.pro_name', 'products.pro_view', 'products.pro_price', 'categories.cate_name', 'admin.name', 'products.pro_number', 'products.created_at', 'products.pro_active')->orderby('products.created_at', 'asc')->get();
         // $all_pro = DB::table('products')->get();
         // ->select('products.id','products.pro_name','products.pro_view','products.pro_price','categories.cate_name','admin.name','products.pro_number','products.created_at','products.pro_active')->orderby('products.created_at','desc')->
+
+
         $manager = view('admin.show-product')->with('all_pro', $all);
         return view('admin-layout')->with('all_pro', $manager);
     }
@@ -42,15 +42,11 @@ class ProductController extends Controller
         $data['pro_name'] = $req->name;
         $data['pro_category_id'] = $req->brand;
         $data['pro_price'] = $req->price;
+        // $data['pro_name_author'] =$req->name_author;
         $data['pro_author_id'] = $req->id_author;
-        // $data['pro_name_author'] = $req->name_author;
-        $data['pro_number'] = $req->number;
         $data['pro_description'] = $req->des;
-
         $data['pro_content'] = $req->content;
         $data['pro_active'] = $req->status;
-        $string = $data['pro_description'];
-
         // $data['pro_view'] = $req->images;
         $get_image = $req->file('images');
         if ($get_image) {
@@ -61,11 +57,11 @@ class ProductController extends Controller
             $data['pro_view'] = $new_image;
             DB::table('products')->insert($data);
             Session::put('msg', 'Thêm sản phẩm thành công!');
-
             return Redirect::to('show-product');
         } else {
             $data['pro_view'] = "";
         }
+
         DB::table('products')->insert($data);
         Session::put('msg', 'them thanh cong');
 
@@ -89,7 +85,6 @@ class ProductController extends Controller
     {
         // $this->checkLogin();
         $edit = DB::table('products')->join('admin', 'products.pro_author_id', '=', 'admin.id')->where('products.id', $pro_id)->get();
-        // $edit =  DB::table('products')->join('categories', 'products.pro_category_id', "=", "categories.id")->where('cate_active', '1')->get();
         $b = DB::table('categories')->where('cate_active', '1')->get();
         $manager = view('admin.edit-product')->with('edit_pro', $edit)->with('brand', $b);
 
@@ -116,7 +111,7 @@ class ProductController extends Controller
         $data['pro_price'] = $req->price;
         $data['pro_category_id'] = $req->brand;
         $data['pro_content'] = $req->content;
-        $data['pro_number'] = $req->number;
+        $data['pro_number'] = $req->number_pro;
         // $data['pro_sale']=$req->sale;
         $get_image = $req->file('images');
         if ($get_image) {
@@ -127,15 +122,12 @@ class ProductController extends Controller
             $data['pro_view'] = $new_image;
             DB::table('products')->where('products.id', $pro_id)->update($data);
             Session::put('msg', 'Cập nhật sản phẩm thành công!');
-            // print_r($data);
-            // die;
             return Redirect::to('show-product');
         }
 
-        DB::table('products')->where('id', $pro_id)->update($data);
+        DB::table('products')->where('products.id', $pro_id)->update($data);
         Session::put('msg', 'Cập nhật sản phẩm thành công!');
-        // print_r($data);
-        // die;
+
         return Redirect::to('show-product');
     }
     public function product_detail($id)

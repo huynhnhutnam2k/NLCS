@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// namespace App\Http\Controllers\strip_tags_content;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Echo_;
@@ -46,10 +44,10 @@ class ProductController extends Controller
         // $data['pro_name_author'] = $req->name_author;
         $data['pro_number'] = $req->number;
         $data['pro_description'] = $req->des;
-
+        print_r(strip_tags($row_get_Business['data']),0,110));
+        die;
         $data['pro_content'] = $req->content;
         $data['pro_active'] = $req->status;
-        $string = $data['pro_description'];
 
         // $data['pro_view'] = $req->images;
         $get_image = $req->file('images');

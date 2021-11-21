@@ -38,7 +38,7 @@ class HomeController extends Controller
             return view('pages.search')->with('pro', $search_pro)->with('categories', $categories);
         } else {
             Session::put('msg', 'Không tìm thấy sản phẩm tương tự ');
-            return view('pages.search')->with('categories', $categories);
+            return view('pages.search')->with('pro', $search_pro)->with('categories', $categories);
         }
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// namespace App\Http\Controllers\strip_tags_content;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Echo_;
@@ -30,9 +28,11 @@ class ProductController extends Controller
     }
     public function show_product()
     {
-        $all = DB::table('products')->join('categories', 'products.pro_category_id', '=', 'categories.id')->join('admin', 'categories.cate_author_id', '=', 'admin.id')->select('products.id', 'products.pro_name', 'products.pro_view', 'products.pro_price', 'categories.cate_name', 'admin.name', 'products.pro_number', 'products.created_at', 'products.pro_active')->orderby('products.created_at', 'desc')->get();
+        $all = DB::table('products')->join('categories', 'products.pro_category_id', '=', 'categories.id')->join('admin', 'categories.cate_author_id', '=', 'admin.id')->select('products.id', 'products.pro_name', 'products.pro_view', 'products.pro_price', 'categories.cate_name', 'admin.name', 'products.pro_number', 'products.created_at', 'products.pro_active')->orderby('products.created_at', 'asc')->get();
         // $all_pro = DB::table('products')->get();
         // ->select('products.id','products.pro_name','products.pro_view','products.pro_price','categories.cate_name','admin.name','products.pro_number','products.created_at','products.pro_active')->orderby('products.created_at','desc')->
+
+
         $manager = view('admin.show-product')->with('all_pro', $all);
         return view('admin-layout')->with('all_pro', $manager);
     }
@@ -46,10 +46,8 @@ class ProductController extends Controller
         // $data['pro_name_author'] = $req->name_author;
         $data['pro_number'] = $req->number;
         $data['pro_description'] = $req->des;
-
         $data['pro_content'] = $req->content;
         $data['pro_active'] = $req->status;
-        $string = $data['pro_description'];
 
         // $data['pro_view'] = $req->images;
         $get_image = $req->file('images');
@@ -66,6 +64,7 @@ class ProductController extends Controller
         } else {
             $data['pro_view'] = "";
         }
+
         DB::table('products')->insert($data);
         Session::put('msg', 'them thanh cong');
 

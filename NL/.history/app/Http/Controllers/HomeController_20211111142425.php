@@ -34,11 +34,9 @@ class HomeController extends Controller
         //     $i+=1;
         // }
         // Session::put('sl',$i);
-        if ($search_pro) {
-            return view('pages.search')->with('pro', $search_pro)->with('categories', $categories);
-        } else {
+        if ($search_pro === '') {
             Session::put('msg', 'Không tìm thấy sản phẩm tương tự ');
-            return view('pages.search')->with('categories', $categories);
         }
+        return view('pages.search')->with('pro', $search_pro)->with('categories', $categories);
     }
 }

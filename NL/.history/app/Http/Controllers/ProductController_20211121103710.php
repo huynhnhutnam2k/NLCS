@@ -50,7 +50,12 @@ class ProductController extends Controller
         $data['pro_content'] = $req->content;
         $data['pro_active'] = $req->status;
         $string = $data['pro_description'];
+        // echo strip_tags_content($string);
+        // function strip_tags_content($text)
+        // {
 
+        //     return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
+        // }
         // $data['pro_view'] = $req->images;
         $get_image = $req->file('images');
         if ($get_image) {
